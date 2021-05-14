@@ -8,6 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository 
     name: trifacta-config-repo
+    namespace: flux-resources
   path: ./infrastructure
   prune: true
   validation: client
