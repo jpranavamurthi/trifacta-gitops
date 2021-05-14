@@ -11,7 +11,7 @@ spec:
       chart: charts/cluster-foundation
       sourceRef:
         kind: GitRepository
-        name: trifacta
+        name: trifacta-config-repo
         namespace: flux-resources
   install:
     remediation:

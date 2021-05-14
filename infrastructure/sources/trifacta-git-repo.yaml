@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: trifacta
+  name: trifacta-config-repo
   namespace: flux-resources
 spec:
   interval: 1m

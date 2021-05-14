@@ -7,7 +7,7 @@ spec:
   interval: 1m0s
   sourceRef:
     kind: GitRepository 
-    name: flux-resources
+    name: trifacta-config-repo
   path: ./infrastructure
   prune: true
   validation: client
