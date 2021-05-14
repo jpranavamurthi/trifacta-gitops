@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: trifacta-services
+  namespace: trifacta
+spec:
+  interval: 5m
+  releaseName: trifacta-services
+  chart:
+    spec:
+      chart: charts/trifacta
+      sourceRef:
+        kind: GitRepository
+        name: trifacta
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+
