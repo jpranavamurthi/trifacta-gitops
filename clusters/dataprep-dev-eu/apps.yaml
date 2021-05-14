@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: infrastructure
   sourceRef:
-    kind: GitRepository
+    kind: GitRepository 
     name: flux-system
   path: ./apps/dataprep-dev-eu
   prune: true
