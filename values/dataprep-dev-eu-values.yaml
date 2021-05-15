@@ -7,6 +7,8 @@ spec:
   chart:
     spec:
       valuesFiles:
+        # TODO - can the first 2 vaules files be specified in the
+        # non-cluster specific release.yaml?
         - charts/cluster-foundation/values.yaml
         - charts/trifacta/values.yaml        
         - values/gke_trifacta-development_eu-west3-a_dataprep-dev.yaml
