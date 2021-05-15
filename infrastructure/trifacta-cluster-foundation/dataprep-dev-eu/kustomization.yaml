@@ -2,6 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-resources
 resources:
-  - sources
-  - trifacta-objects
-  - trifacta-cluster-foundation
+  - ../cluster-foundation
+patchesStrategicMerge:
+  - ../../values/dataprep-dev-values.yaml
