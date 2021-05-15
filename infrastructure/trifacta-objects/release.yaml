@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: trifacta-objects
+  namespace: flux-resources
+spec:
+  releaseName: trifacta-objects
+  chart:
+    spec:
+      chart: charts/cluster-objects
+      sourceRef:
+        kind: GitRepository
+        name: trifacta-config-repo
+        namespace: flux-resources
+  interval: 1m0s
+  install:
+    remediation:
+      retries: 3
