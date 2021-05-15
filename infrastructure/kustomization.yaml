@@ -4,4 +4,3 @@ namespace: flux-resources
 resources:
   - sources
   - trifacta-objects
-  - trifacta-cluster-foundation
