@@ -13,6 +13,7 @@ spec:
         name: trifacta-config-repo
         namespace: flux-resources
       valuesFiles:
+        - charts/cluster-foundation/values.yaml
         - charts/trifacta/values.yaml
   interval: 1m0s
   install:
