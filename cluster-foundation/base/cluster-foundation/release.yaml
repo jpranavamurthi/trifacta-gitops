@@ -12,6 +12,7 @@ spec:
         kind: GitRepository
         name: trifacta-config-repo
         namespace: flux-resources
+      valuesFile: ../../../values/values.yaml
   interval: 1m0s
   install:
     remediation:
