@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: trifacta-cluster-foundation
-  namespace: flux-resources
+  namespace: default
 spec:
   releaseName: trifacta-cluster-foundation
   chart:
@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: GitRepository
         name: trifacta-config-repo
-        namespace: flux-resources
+        namespace: default
       valuesFiles:
         - charts/cluster-foundation/values.yaml
         - charts/trifacta/values.yaml

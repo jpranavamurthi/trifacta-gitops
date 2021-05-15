@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
   name: trifacta-config-repo
-  namespace: flux-resources
+  namespace: default
 spec:
   interval: 1m
   url: ssh://git@phab.trifacta.com/diffusion/GCCONF/google-cloud-configuration.git
