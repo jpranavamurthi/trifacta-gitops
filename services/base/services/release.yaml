@@ -12,11 +12,11 @@ spec:
         kind: GitRepository
         name: trifacta-config-repo
         namespace: default
-      # doesn't seem to be picked up by the cluster
-      # specific yaml since there is an override
+      # doesn't seem to be picked up by the cluster-specific
+      # yaml since there is an override
       # specified in there as well
-      valuesFiles:
-        - charts/trifacta/values.yaml
+      # valuesFiles:
+      #  - charts/trifacta/values.yaml
   interval: 1m0s
   install:
     remediation:
