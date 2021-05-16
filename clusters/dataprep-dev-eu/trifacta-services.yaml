@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1m0s
   dependsOn:
-    - name: trifacta-services
+    - name: infrastructure
   sourceRef:
     kind: GitRepository
     name: flux-system
