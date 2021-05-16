@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: init-dbs
+  namespace: default
+spec:
+  releaseName: init-dbs
+  chart:
+    spec:
+      chart: charts/init-dbs
+      sourceRef:
+        kind: GitRepository
+        name: trifacta-config-repo
+        namespace: default
+      # doesn't seem to be picked up by the cluster-specific
+      # yaml since there is an override
+      # specified in there as well
+      # valuesFiles:
+      #  - charts/init-dbs/values.yaml
+  interval: 1m0s
+  install:
+    remediation:
+      retries: 3
