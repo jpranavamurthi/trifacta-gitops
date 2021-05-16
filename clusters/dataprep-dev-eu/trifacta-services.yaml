@@ -1,0 +1,16 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: trifacta-services
+  namespace: default
+spec:
+  interval: 1m0s
+  dependsOn:
+    - name: trifacta-services
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  path: ./trifacta-services/dataprep-dev-eu
+  prune: true
+  validation: client

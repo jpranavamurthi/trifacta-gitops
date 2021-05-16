@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: trifacta-services
+  namespace: default
+spec:
+  releaseName: trifacta-services
+  chart:
+    spec:
+      chart: charts/trifacta
+      sourceRef:
+        kind: GitRepository
+        name: trifacta-config-repo
+        namespace: default
+      # doesn't seem to be picked up by the cluster
+      # specific yaml since there is an override
+      # specified in there as well
+      # valuesFiles:
+      #  - charts/trifacta/values.yaml
+  interval: 1m0s
+  install:
+    remediation:
+      retries: 3
