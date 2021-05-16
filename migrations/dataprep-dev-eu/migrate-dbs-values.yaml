@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: migrate-dbs
+  namespace: default
+spec:
+  chart:
+    spec:
+      valuesFiles:
+        # TODO - can the first values file be specified in the
+        # non-cluster specific release.yaml?
+        - charts/migrate-dbs/values.yaml
+        - values/gke_trifacta-development_eu-west3-a_dataprep-dev.yaml
