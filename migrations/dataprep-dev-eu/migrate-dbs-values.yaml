@@ -10,5 +10,5 @@ spec:
         # TODO - can the first values file be specified in the
         # non-cluster specific release.yaml?
         - charts/migrate-dbs/values.yaml
-        - charts/trifacta/vaules.yaml
+        - charts/trifacta/values.yaml
         - values/gke_trifacta-development_eu-west3-a_dataprep-dev.yaml
