@@ -11,6 +11,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: ./services/dataprep-dev-eu-default-ns
+  path: ./services/dataprep-dev-eu
   prune: true
   validation: client
