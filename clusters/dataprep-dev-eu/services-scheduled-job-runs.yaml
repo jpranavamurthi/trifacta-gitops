@@ -18,7 +18,7 @@ spec:
   patchesStrategicMerge:
   # TODO - can the first values file be specified in the
   # non-cluster specific release.yaml?
-  - charts/trifacta/values.yaml
-  - charts/trifacta/values-scheduled.yaml
-  - values/gke_trifacta-development_eu-west3-a_dataprep-dev.yaml
-  - charts/trifacta/values-scheduled-job-runs-override.yaml
+  - ../../values/values.yaml
+  - ../../values/values-scheduled.yaml
+  - ../../values/gke_trifacta-development_eu-west3-a_dataprep-dev.yaml
+  - ../../values/values-scheduled-job-runs-override.yaml

@@ -1,0 +1,7 @@
+global:
+  loadPattern: scheduled
+
+tags:
+  time-based-trigger-service: true
+  web-static: false
+  saas-mgmt-service: false

@@ -1,0 +1,524 @@
+# Default values for ALL trifacta-related charts.
+
+global:
+  product: "saas"  # or "dataprep"
+
+
+  # these options allow quicker deployment in testing type environments
+  ## by default both of these are off, and they should be enabled in the
+  ## specific environment specific values files
+  # clusterScaleUp is false by default
+  ## setting it to true will cause Ci scripts to scale the cluster up
+  ## before deployments are launched
+  # deploymentStrategy is rolling by default
+  ## Setting it to recreate will cause pods to be replaced less gracefully
+  #
+  deploymentOptions:
+    clusterScaleUp: 'false'
+    deploymentStrategy: 'rolling'
+
+  # can be "on-demand" or "scheduled"
+  # install "on-demand" to "default" namespace,
+  # and "scheduled" to the "scheduled-job-runs"
+  # it will install the necessary part
+  # optimized for this particular load pattern
+  loadPattern: "on-demand" # or "scheduled"
+
+  imageTags:
+    default: "latest-dev"
+    zipkinCollector: "latest"
+
+  imagePullPolicy:
+    default: "Always"
+
+  clusterParameters:
+    gcrPath: gcr.io/trifacta-build/saas
+
+  # REPLACE THIS IN PROJECT-SPECIFIC CONFIG
+  #cloudSqlInstances:
+    # default: trifacta-saas-ci:us-west1:saas-helm
+
+  databaseType: mysql
+
+  sidecars:
+    monitoring:
+      enable: true
+    logCollector:
+      enable: true
+    cloudSqlProxy:
+      enable: true
+
+  analytics:
+    amplitudeEnabled: "false"
+    enableUserEventLogging: "false"
+    enabled: "true"
+    enabledChannels: Log
+
+  sentry:
+    clientEnabled: "false"
+    serverEnabled: "false"
+
+  featureFlagsBeta:
+    meteringEnabled: "true"
+
+  config:
+    appName: Trifacta Helm Testing
+    bjrDataflow: live
+    blacklistUsers: ''
+    # edition: Dataprep
+    enableBlacklistUsers: 'true'
+    enableFeatureFlowSharing: 'false'
+    enableGoogleAnalytics: 'false'
+    enableServiceAccounts: 'false'
+    enableWebappSelfMonitoring: 'false'
+    enableWhitelistUsers: 'true'
+    enableEmailRegistration: "false"
+    enablePasswordReset: "false"
+    gcsDefaultBucket: trifacta-gcloud-testing.appspot.com
+    gcsRootPath: /google-data-wrangle
+    googleAnalyticsTrackingId: ''
+    googleClientPropertiesScope: profile email https://www.googleapis.com/auth/cloudplatformprojects.readonly
+    oauthRedirectUri: https://localhost/sign-in/gCallback
+    # set revokeProjectAccessUrl to a different link outside of Prod to avoid any incidental deactivations
+    revokeProjectAccessUrl: https://console.cloud.google.com?project=<%=project%>
+    preReleaseFeatureFlagClass: stable
+    serviceAccountNamePattern: projects/-/serviceAccounts/sa{}@trifacta-gcloud-testing.iam.gserviceaccount.com
+    verboseOutputFromCloudSqlProxy: 'true'
+    whitelistUsers: .*@trifacta\.com,.*@trifactatesting\.net,admin@trifacta\.local
+    tosEnabled: "false"
+    tosIntroductionText: ""
+    timeToLiveInSecondsForCachedRequest: "300"
+    # This value should be quoted "<VALUE>", in case of big numeric value, otherwise it will be casted to int and will be represented as "3.6e+6"
+    backgroundRefreshTaskTimeoutInMilliseconds: "3600000"
+    googleDataflowUseLaunchedByDataprepLabel: false
+    # Only applicable for SaaS
+    freeTierRegistration:
+      mockMarketingSignUpPageEnabled: false
+    gcpMarketplaceSignupEnabled: "false"
+    # Override for 'fileStorage' is used only for Dataprep
+    fileStorage:
+      defaultBaseUris: 'sftp:///'
+      whitelist: 'EMPTY_ARRAY'
+    vfs:
+      jsFallbackForProtocols:
+        gs: '0'
+    openApi:
+      enableResponseEnforcement: "false"
+    enableFlow2OldFlowToggle: "false"
+    walkthroughDatasetBucket: "dataprep-samples-test"
+    walkthroughDatasetPath: "example-data/USDA_Farmers_Market_2013_GCP.csv"
+
+
+  googleIntegrationConfig:
+    additionalCliArguments: --diskSizeGb=250
+    enableGoogleEncryptedCommunication: 'false'
+    enableServiceAccounts: 'true'
+    googleTosPublicKey: |
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqiayFmqLoijqakBAmWHy
+      qifTrPsMSKK090A2IHYUnad70w3VM3CaOhUEDFhX0P4hbLlV1brjGlJynK0caJfj
+      WGHI77TdmHGtpuNjMp76LnYdsMGOVBU3hUyTknRhOauPGQS+MQo5rTQtOcN55uxi
+      +FeWF3J3wTGftsozz4suQgWk/bZmPbwkvZVUWkhZ8TMjXOGKhwlPAp3WBTY10RL5
+      apDFIZAd2gvSXFTetfPDa9bSUSy37YrfQNNFXJICM2jb+sSPur4zPaRhrMyTeLWG
+      3i3o7PO5uxRoD79ySz7xHVZjDkKXhiX0gJONnojAPyQFrBVb4hUJWDuEg273UCI2
+      TwIDAQAB
+      -----END PUBLIC KEY-----
+    googleTosSubIdEncryptionKey: |
+      -----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnjSoWV4DH6idYHo6LugGuaEHgph+S5GpboNLmDcV4z1KjbiDPKD70bklp9vdpmogbyhRGORk72RreQmtUGc8N4NYT9xjcXYURg2kB/I6Mja2BSmmq4yDkEHb8EJfxsbw8xonNQ5GVlkGXFc+f7KWFhaAWJIUt9jfEenulekgVYc+67CklmVO77Fcy2JYOWaG9Ki89Mo8CIa1sM47BPcYx/5ZOhOj1SixRFgR2sDgONIyd4Xb8jEb0v9Yxw7edhdaSL1KNjGoPKU2+sSHpL1+8a20bZuUFcsheNH9fN/h6EKxD6peqpC0apfk8jZdDIWLjKZdl5uUPDuapWby5hPvjQIDAQAB
+      -----END PUBLIC KEY-----
+    isMockTos: 'true'
+
+  googleMarketplace:
+    serviceName: "gcp-marketplace-dev.trifacta.net"
+    projectId: "trifacta-marketplace-test"
+
+  cachingService:
+    implementation: redisClient
+
+  smtp:
+    enableSSL: "false"
+    # IP for https://mail.in.trifacta.net
+    # see https://confluence.trifacta.com/display/ENG/Engineering+Infrastructure+-+Internal+tools
+    smtpHost: 35.197.93.32
+    smtpPort: 7025
+
+  captcha:
+    enabled: "true"
+
+  features:
+    bjrEmailAliasForJobName: 'false'
+
+  googleWipeout:
+    enabled: false
+    pullSubscription: ''
+    pushSubscription: ''
+
+  batchJobRunner:
+    bjrMockRuntimeInMinutes: '30'
+    bjrSchedulerThreadPoolSize: '30'
+    databaseDriver: com.mysql.jdbc.Driver
+    databaseHost: "127.0.0.1"
+    databaseName: trifacta_activiti
+    databaseType: mysql
+    host: batch-job-runner-service
+    photonDistroPath: /photon/dist/centos6/photon
+    port: '41920'
+    topOfTree: /opt/batch-job-runner
+    trifactaConf: /opt/batch-job-runner/conf
+
+  jobStatisticsReporting:
+    bigQueryTableName: "job_executions"
+    marketplaceBigQueryTableName: "marketplace_job_executions"
+
+  mlService:
+    host: ml-service
+    port: '5000'
+
+  dataService:
+    host: data-service
+    port: '41912'
+    coreThreadPoolSize: 16
+    jvmOptions: "-XX:MaxRAMPercentage=75.0"
+
+  vfsService:
+    host: vfs-service
+    port: '41913'
+
+  webStatic:
+    host: web-static-service
+    port: '3016'
+
+  webapp:
+    databaseHost: "127.0.0.1"
+    databaseName: trifacta
+    databaseType: mysql
+    host: webapp-service
+    numberOfWorkers: '2'
+    port: '3006'
+    orchestrationWorkersEnabledOnDefaultNamespace: true
+
+  proxy:
+    host: proxy-service
+
+  timeBasedTriggerService:
+    databaseHost: "127.0.0.1"
+    databaseName: trifacta_tbts
+    databaseType: MYSQL
+    databasePoolMaxSize: "20"
+    host: time-based-trigger-service
+    port: '43033'
+    namespace: 'scheduled-job-runs'
+    rescheduledTriggerInterval: '60000'
+    quartzBatchTriggerAcquisitionFireAheadTimeWindow: "5000"
+    quartzBatchTriggerAcquisitionMaxCount: "2"
+    quartzDbFailureRetryInterval: "15000"
+    quartzIdleWaitTime: "30000"
+    quartzThreadCount: "5"
+    quartzThreadPriority: "5"
+    tracingCollectorHost: "127.0.0.1"
+    tracingCollectorPort: '9411'
+    tracingEnabled: 'false'
+
+  secureTokenService:
+    databaseHost: "127.0.0.1"
+    databaseName: trifacta_sts
+    databaseType: mysql
+    host: secure-token-service
+    mode: production
+    port: '41921'
+    simulatedMeanLatency: '2000'
+    tracingCollectorHost: "127.0.0.1"
+    tracingCollectorPort: '9411'
+    tracingEnabled: 'false'
+
+  schedulingService:
+    cacheWarmingEnabled: 'false'
+    cacheWarmingLowerBoundTimeInMs: '0'
+    cacheWarmingUpperBoundTimeInMs: '3000000'
+    databaseHost: "127.0.0.1"
+    databaseName: trifacta_scheduling_service
+    databaseType: MYSQL
+    host: scheduling-service
+    maxJobQueueSize: '20'
+    port: '43143'
+    tracingCollectorHost: "127.0.0.1"
+    tracingCollectorPort: '9411'
+    tracingEnabled: 'false'
+    webappClientMaxConcurrentRequests: '30'
+    databasePoolMaxSize: "60"
+
+  configurationService:
+    databaseHost: 127.0.0.1
+    databaseName: trifacta_configuration_service
+    databaseType: MYSQL
+    host: configuration-service
+    port: "10075"
+    tracingCollectorHost: 127.0.0.1
+    tracingCollectorPort: "9411"
+    tracingEnabled: 'false'
+    importFile: "saas-dev.conf"
+    overrides:
+      overrides.conf: '\n'
+
+  artifactStorageService:
+    databaseHost: "127.0.0.1"
+    databaseName: trifacta_artifact_service
+    databaseType: MYSQL
+    host: artifact-storage-service
+    maxJobQueueSize: '20'
+    port: '41916'
+    webappClientMaxConcurrentRequests: '30'
+    databasePoolMaxSize: "60"
+    maxRequestSize: "128MB"
+
+  authorizationService:
+    databaseHost: "127.0.0.1"
+    databaseName: trifacta_authorization_service
+    databaseType: MYSQL
+    host: authorization-service
+    maxJobQueueSize: '20'
+    port: '41918'
+    webappClientMaxConcurrentRequests: '30'
+    databasePoolMaxSize: "60"
+    maxRequestSize: "128MB"
+
+  contractService:
+    databaseHost: "127.0.0.1"
+    databasePort: "3306"
+    databaseName: trifacta_contract_service
+    databaseType: MYSQL
+    host: contract-service
+    port: '41919'
+    databasePoolMaxSize: "60"
+    marketplace:
+      mockProcurementUrl: ""
+      pubsub:
+        enablementSubscription:
+          enabled: false
+          name: "consumer-lifecycle-integration"
+        procurementSubscription:
+          enabled: false
+          name: "procurement-api-integration"
+
+  orchestrationService:
+    databaseHost: "127.0.0.1"
+    databasePort: "3306"
+    databaseName: trifacta_orchestration_service
+    databaseType: MYSQL
+    host: orchestration-service
+    port: '42424'
+    databasePoolMaxSize: "60"
+
+  optimizerService:
+    databaseHost: "127.0.0.1"
+    databasePort: "3306"
+    databaseName: trifacta_optimizer_service
+    databaseType: MYSQL
+    host: optimizer-service
+    port: '41922'
+    databasePoolMaxSize: "60"
+
+  jobMetadataService:
+    databaseHost: "127.0.0.1"
+    databaseName: trifacta_jms
+    databaseType: MYSQL
+    host: job-metadata-service
+    port: '41915'
+
+  jobService:
+    bjrMockRuntimeInMinutes: '30'
+    bjrSchedulerThreadPoolSize: '30'
+    databaseHost: "127.0.0.1"
+    databasePort: "3306"
+    databaseName: trifacta_job_service
+    databaseType: MYSQL
+    host: job-service
+    photonDistroPath: /photon/dist/centos6/photon
+    port: '20075'
+    topOfTree: /opt/job-service
+    trifactaConf: /opt/job-service/conf
+    tracingEnabled: 'false'
+    jvmOptions: "-XX:MaxRAMPercentage=60.0"
+
+  conversionService:
+    host: conversion-service
+    port: '41914'
+    topOfTree: /opt/conversion-service
+    trifactaConf: /opt/conversion-service/conf
+
+  javaVfsService:
+    host: java-vfs-service
+    port: '41917'
+    tracingCollectorHost: 127.0.0.1
+    tracingCollectorPort: "9411"
+    jvmOptions: "-XX:MaxRAMPercentage=75.0"
+
+  googleMarketplaceMetricsReporter:
+    databaseHost: "127.0.0.1"
+    databasePort: "3306"
+    databaseName: trifacta_gmmr
+    databaseType: MYSQL
+    host: google-marketplace-metrics-reporter
+    port: '42525'
+    topOfTree: /opt/google-marketplace-metrics-reporter
+    trifactaConf: /opt/google-marketplace-metrics-reporter/conf
+    enabled: false
+    mockServicesControlUrl: ""
+
+  saasMgmtService:
+    host: saas-mgmt-service
+    port: '3001'
+    oauth2ProxyPort: '2999'
+    enabled: false
+
+  connectorConfigurationService:
+    host: connector-configuration-service
+    port: '41925'
+    databaseHost: "127.0.0.1"
+    databasePort: "3306"
+    databaseName: trifacta_ccs
+    databaseType: MYSQL
+    enabled: false
+
+  autoscaling:
+    maxReplicas: 1
+    minReplicas: 1
+    minReplicasPerService: {}
+    maxReplicasPerService: {}
+    # cpuPercentageSize could be one of the following value [default, saas-small]
+    # use saas-small for non-critical env, e.g. dev environment, to save costs.
+    cpuPercentageSize: default
+    cpuPercentage:
+      default:
+        "batch-job-runner": 40
+        "proxy": 30
+        "scheduling-service": 40
+        "webapp": 20
+        "configuration-service": 40
+        "conversion-service": 40
+        "secure-token-service": 40
+        "web-static": 40
+        "time-based-trigger-service": 40
+        "ml-service": 40
+        "artifact-storage-service": 40
+        "authorization-service": 40
+        "data-service": 25
+        "vfs-service": 40
+        "job-service": 40
+        "job-metadata-service": 40
+        "java-vfs-service": 40
+        "contract-service": 40
+        "google-marketplace-metrics-reporter": 40
+        "orchestration-service": 40
+        "optimizer-service": 40
+        "connector-configuration-service": 40
+      saas-small:
+        "batch-job-runner": 500
+        "proxy": 400
+        "scheduling-service": 400
+        "webapp": 300
+        "configuration-service": 800
+        "conversion-service": 800
+        "secure-token-service": 800
+        "web-static": 700
+        "time-based-trigger-service": 400
+        "ml-service": 500
+        "artifact-storage-service": 800
+        "authorization-service": 400
+        "data-service": 800
+        "vfs-service": 200
+        "job-service": 400
+        "job-metadata-service": 500
+        "java-vfs-service": 800
+        "contract-service": 400
+        "google-marketplace-metrics-reporter": 800
+        "orchestration-service": 800
+        "optimizer-service": 800
+        "connector-configuration-service": 800
+
+  proactiveScaling:
+    enabled: false
+    minReplicas:
+      _default: 1
+    maxReplicas:
+      _default: 1
+    upcomingJobsPerPod:
+      _default: 300
+
+  # REPLACE THOSE IN PROJECT-SPECIFIC-CONFIGS
+  aws:
+    awsAccountId: ""
+    s3BucketName: ""
+    s3PathsConfigSubdir: ""
+    s3ServerSideKmsKeyId: ""
+    systemIAMRole: ""
+
+  awsEmr:
+    awsEMRJobtagPrefix: ""
+    awsEmrExtractIPFromDNS: ""
+    awsEmrResourceBucket: ""
+    awsEmrResourcePath: ""
+    awsEmrSparkProps: '{"spark.app.debug.enable": "false","spark.checkpoint.compress": "true","spark.driver.extraJavaOptions": "-XX:MaxPermSize=1024m -XX:PermSize=256m","spark.driver.memory": "5GB","spark.dynamicAllocation.enabled": "true","spark.dynamicAllocation.maxExecutors": "2","spark.executor.cores": "2","spark.executor.memory": "5GB","spark.hadoop.avro.mapred.ignore.inputs.without.extension": "true","spark.hadoop.validateOutputSpecs": "false","spark.shuffle.service.enabled": "true","spark.sql.autoBroadcastJoinThreshold": "20971520","spark.sql.broadcastTimeout": "300","spark.sql.shuffle.partitions": "200","transformer.dataframe.checkpoint.threshold": "200","transformer.maxDataframeFilterSubExprCount": "100","transformer.plan.log": "false","spark.driver.maxResultSize": "0"}'
+    awsRegion: "false"
+    connectToRmEnabled: "true"
+
+  tracing:
+    enabled: "false"
+    samplerParam: "1"
+    samplerType: "const"
+
+  webappQueueType: 'sqlite'
+
+  redis:
+    enabled: 'false'
+    useSentinel: 'false'
+    host: 'redis-master.redis.svc.cluster.local'
+    port: '6379'
+    usePassword: 'true'
+
+  dbMonitoring:
+    dbCredentials: db-credentials-webapp
+    datasetPrefix: webapp_
+
+  cloudProfiler:
+    enabled: "false"
+
+  stackdriverMetricsExport:
+    enabled: "false"
+    # The higher the frequency, the more $$ it incurs for stackdriver monitoring charges.
+    # e.g.A metric sent once an hour costs 1/60th as much as a metric sent once a minute
+    frequency: "5m"
+
+  stripe:
+    enabled: false
+
+  safeToEvict:
+    enabled: false
+
+  resources:
+    sidecarDefault:
+      requests:
+        cpu: 100m
+        memory: 384Mi
+      limits:
+        cpu: 250m
+        memory: 960Mi
+
+  # resource size could be one of the following [default-size, saas-small]
+  # use saas-small for non-critical env, e.g. dev environment, to save costs.
+  resourceSize: default-size
+
+tags:
+  secure-token-service: false
+  time-based-trigger-service: false
+  web-static: true
+  job-service: false
+  job-metadata-service: false
+  conversion-service: false
+  contract-service: false
+  google-marketplace-metrics-reporter: false
+  authorization-service: false
+  orchestration-service: true
+  optimizer-service: false
+  saas-mgmt-service: false
+  connector-configuration-service: false

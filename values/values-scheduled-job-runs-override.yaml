@@ -1,0 +1,10 @@
+# This file is used to set values for the "scheduled-job-runs" namespace that take precedence
+# over all the over values file.
+# /!| This file should be used with caution, as it can cause confusion.
+# Indeed, the values here takes precedence even over context values (from cluster value files).
+# You should only add values here if they should ALWAYS be the same in the "scheduled-job-runs"
+# namespace, for each cluster.
+
+# google-marketplace-metrics-reporter should never run in the "scheduled-job-runs" namespace.
+tags:
+  google-marketplace-metrics-reporter: false
