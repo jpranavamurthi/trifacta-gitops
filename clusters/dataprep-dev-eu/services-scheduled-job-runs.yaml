@@ -13,7 +13,7 @@ spec:
     name: flux-system
     namespace: flux-system
   prune: true
-  validation: clien
+  validation: client
   path: ./services/dataprep-dev-eu
   patchesStrategicMerge:
   - apiVersion: helm.toolkit.fluxcd.io/v2beta1
