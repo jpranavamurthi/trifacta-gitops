@@ -7,7 +7,7 @@ spec:
   interval: 1m0s
   dependsOn:
     - name: migrate-dbs
-    - namespace: default
+      namespace: default
   sourceRef:
     kind: GitRepository
     name: flux-system
