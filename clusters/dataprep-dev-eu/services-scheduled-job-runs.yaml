@@ -2,7 +2,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
   name: services
-  namespace: default
+  namespace: scheduled-job-runs
 spec:
   interval: 1m0s
   dependsOn:
@@ -11,6 +11,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: ./services/dataprep-dev-eu
+  path: ./services/dataprep-dev-eu-scheduled-job-runs-ns
   prune: true
   validation: client
