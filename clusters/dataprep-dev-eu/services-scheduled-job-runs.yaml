@@ -12,6 +12,22 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: ./services-scheduled-job-runs/dataprep-dev-eu
   prune: true
   validation: client
+  patchesStrategicMerge:
+  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    metadata:
+      name: services-scheduled-job-runs
+      namespace: scheduled-job-runs
+    spec:
+      chart:
+        spec:
+          valuesFiles:
+            # TODO - can the first values file be specified in the
+            # non-cluster specific release.yaml?
+            - charts/trifacta/values.yaml
+            - charts/trifacta/values-scheduled.yaml
+            - values/gke_trifacta-development_eu-west3-a_dataprep-dev.yaml
+            - charts/trifacta/values-scheduled-job-runs-override.yaml
+
