@@ -12,13 +12,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  path: ./services-scheduled-job-runs/dataprep-dev-eu
   prune: true
   validation: client
   path: ./services/dataprep-dev-eu
-  patchesStrategicMerge:
-  # TODO - can the first values file be specified in the
-  # non-cluster specific release.yaml?
-  - ../../../../../values/values.yaml
-  - ../../values/values-scheduled.yaml
-  - ../../values/gke_trifacta-development_eu-west3-a_dataprep-dev.yaml
-  - ../../values/values-scheduled-job-runs-override.yaml
