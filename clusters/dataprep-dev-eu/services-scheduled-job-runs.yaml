@@ -15,4 +15,3 @@ spec:
   path: ./services-scheduled-job-runs/dataprep-dev-eu
   prune: true
   validation: client
-  path: ./services/dataprep-dev-eu
